@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion Results</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- FontAwesome for icons -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.5s ease;
+        }
+
+        .container {
+            margin-top: 50px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .card {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background-color: #28a745;
+            color: white;
+            font-size: 1.25rem;
+            text-align: center;
+            padding: 20px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-header:hover {
+            background-color: #218838;
+        }
+
+        .btn-download {
+            background-color: #28a745;
+            color: white;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-download:hover {
+            background-color: #218838;
+        }
+
+        .btn-download:focus {
+            outline: none;
+        }
+
+        .btn-download:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
+
+        .metadata-list li {
+            font-size: 1.1em;
+            transition: transform 0.2s ease;
+        }
+
+        .metadata-list li:hover {
+            transform: scale(1.05);
+        }
+
+        .alert {
+            font-size: 1.1em;
+        }
+
+        /* Tooltip styles */
+        .tooltip-inner {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .tooltip.bs-tooltip-top .arrow::before {
+            border-top-color: #28a745;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3>Conversion Successful!</h3>
+            </div>
+            <div class="card-body">
+                <h4 class="text-center">File Metadata:</h4>
+                <ul class="list-group metadata-list">
+                    <li class="list-group-item"><strong>Title:</strong> {{ metadata.title or "N/A" }}</li>
+                    <li class="list-group-item"><strong>Author:</strong> {{ metadata.author or "N/A" }}</li>
+                    <li class="list-group-item"><strong>Subject:</strong> {{ metadata.subject or "N/A" }}</li>
+                    <li class="list-group-item"><strong>Keywords:</strong> {{ metadata.keywords or "N/A" }}</li>
+                    <li class="list-group-item"><strong>Created:</strong> {{ metadata.created or "N/A" }}</li>
+                </ul>
+                
+                <div class="text-center mt-4">
+                    <h4>Download the Converted PDF:</h4>
+                    <a href="{{ url_for('download_file', filename=pdf_filename) }}" class="btn btn-download btn-lg" data-toggle="tooltip" title="Click to download your converted PDF">
+                        <i class="fas fa-download"></i> Download PDF
+                    </a>
+                </div>
+                
+                {% if password %}
+                <div class="alert alert-warning mt-3" role="alert">
+                    This PDF is password protected. Please use the password you set during conversion to open it.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Initialize tooltips -->
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</body>
+</html>

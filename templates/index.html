@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word to PDF Converter</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- FontAwesome for icons -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.5s ease;
+        }
+
+        .container {
+            margin-top: 50px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .card {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            font-size: 1.25rem;
+            text-align: center;
+            padding: 20px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-header:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-upload {
+            background-color: #007bff;
+            color: white;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-upload:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-upload:focus {
+            outline: none;
+        }
+
+        .btn-upload:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
+
+        .form-control {
+            border-radius: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            background-color: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        /* Tooltip style */
+        .tooltip-inner {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .tooltip.bs-tooltip-top .arrow::before {
+            border-top-color: #007bff;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3>Convert Your Word Document to PDF</h3>
+            </div>
+            <div class="card-body">
+                <form action="/upload" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="file" class="h5">Upload Your .docx File</label>
+                        <input type="file" name="file" accept=".docx" class="form-control-file" id="file" required data-toggle="tooltip" title="Only .docx files are allowed">
+                    </div>
+                    
+                    <!-- Password field for PDF protection -->
+                    <div class="form-group">
+                        <label for="password" class="h5">Set a Password for the PDF (Optional)</label>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Enter password to protect the PDF" data-toggle="tooltip" title="Password is optional but recommended for security">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-upload btn-block">Upload and Convert</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Initialize tooltips -->
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</body>
+</html>
