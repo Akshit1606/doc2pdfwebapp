@@ -1,0 +1,6 @@
+Flask==2.3.3
+python-docx==0.8.11
+docx2pdf==0.1.8
+PyPDF2==3.0.1
+pywin32==306
+Werkzeug==2.3.7
