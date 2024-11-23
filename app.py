@@ -6,6 +6,8 @@ from werkzeug.utils import secure_filename
 from PyPDF2 import PdfReader, PdfWriter
 import logging
 import subprocess
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -75,14 +77,21 @@ def add_password_to_pdf(pdf_path, password):
 
 # Function to convert DOCX to PDF using pypandoc
 def convert_docx_to_pdf(docx_path, pdf_path):
-    try:
-        # Call unoconv to convert DOCX to PDF
-        subprocess.run(['unoconv', '-f', 'pdf', '-o', pdf_path, docx_path], check=True)
-        logging.debug(f"Converted DOCX to PDF: {pdf_path}")
-        return pdf_path
-    except subprocess.CalledProcessError as e:
-        logging.error(f"Error during DOCX to PDF conversion: {str(e)}")
-        return None
+    doc = Document(docx_path)
+    c = canvas.Canvas(pdf_path, pagesize=letter)
+    width, height = letter
+
+    y_position = height - 40
+    for para in doc.paragraphs:
+        c.drawString(40, y_position, para.text)
+        y_position -= 12
+        if y_position < 40:
+            c.showPage()
+            y_position = height - 40
+
+    c.save()
+    logging.debug(f"Converted DOCX to PDF: {pdf_path}")
+    return pdf_path
 
 @app.route('/')
 def index():
