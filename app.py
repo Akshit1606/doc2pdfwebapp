@@ -5,6 +5,7 @@ import pypandoc  # Linux-compatible for DOCX to PDF conversion
 from werkzeug.utils import secure_filename
 from PyPDF2 import PdfReader, PdfWriter
 import logging
+import subprocess
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -75,12 +76,12 @@ def add_password_to_pdf(pdf_path, password):
 # Function to convert DOCX to PDF using pypandoc
 def convert_docx_to_pdf(docx_path, pdf_path):
     try:
-        output = pypandoc.convert_file(docx_path, 'pdf', outputfile=pdf_path)
-        assert output == "", f"Error during conversion: {output}"
+        # Call unoconv to convert DOCX to PDF
+        subprocess.run(['unoconv', '-f', 'pdf', '-o', pdf_path, docx_path], check=True)
         logging.debug(f"Converted DOCX to PDF: {pdf_path}")
         return pdf_path
-    except Exception as e:
-        logging.error(f"Error converting DOCX to PDF: {str(e)}")
+    except subprocess.CalledProcessError as e:
+        logging.error(f"Error during DOCX to PDF conversion: {str(e)}")
         return None
 
 @app.route('/')
