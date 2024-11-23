@@ -8,6 +8,9 @@ from PyPDF2 import PdfReader, PdfWriter
 # Initialize Flask app
 app = Flask(__name__)
 
+# Use the PORT environment variable if it's available, otherwise default to 5000
+port = int(os.environ.get("PORT", 5000))
+
 # Configure upload folder and allowed extensions
 UPLOAD_FOLDER = 'uploads'
 OUTPUT_FOLDER = 'converted_pdfs'
@@ -114,7 +117,7 @@ def encrypt_pdf_service():
     return jsonify({"protected_pdf_url": protected_pdf_path})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=port)
 
 # import os
 # from flask import Flask, render_template, request, send_from_directory, jsonify
