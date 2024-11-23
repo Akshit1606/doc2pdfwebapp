@@ -4,5 +4,5 @@ pypandoc==1.6.4
 PyPDF2==3.0.1
 Werkzeug==2.3.3
 reportlab==3.6.3
-unoconv==0.7
+unoconv==0.6
 gunicorn==20.1.0
